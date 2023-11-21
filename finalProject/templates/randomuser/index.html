@@ -1,0 +1,59 @@
+{% extends 'randomuser/base.html' %}
+
+
+{% block body %}
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <h1 class="display-3 text-center">Random User API</h1>
+
+                <form action="{% url 'randomuser-index' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="number" class="form-control" placeholder="Enter number of users" name="number-of-users">
+                        <input type="text" class="form-control" placeholder="Enter a gender" name="gender">
+                        <button class="btn btn-success" type="submit">Get n number of random users</button>
+                    </div>
+                </form>
+
+                {% comment %}
+                Iterate over each message in the messages list in case there is an error
+            {% endcomment %}
+                {% for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                        <h4>{{ message }}</h4>
+                    </div>
+                {% endfor %}
+
+
+                {% comment %}
+                Show the section below if "users" array is passed from views.py via context variable. If so, then iterate over each user
+            {% endcomment %}
+                {% if users %}
+                    <section class="shadow p-5" id="user-container">
+                        {% for user in users %}
+                            <div class="card mb-3">
+                                <div class="row g-0 align-items-center">
+                                    <div class="col-sm-4">
+                                        <img src="{{ user.picture }}" class="card-img rounded p-1" alt="profile-image">
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="card-body">
+                                            <h1 class="card-title">{{ user.first_name }} {{ user.last_name }}</h1>
+                                            <p class="card-text">Email: {{ user.email }}</p>
+                                            <p class="card-text">Phone: {{ user.phone }}</p>
+                                            <p class="card-text"><small class="text-muted">Registration date: {{ user.registration_date }}</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </section>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
