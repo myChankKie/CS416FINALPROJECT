@@ -1,0 +1,104 @@
+{% extends 'ticketmaster/base.html' %}
+{% block body %}
+    <div class="container-fluid bg-primary text-center">
+        <div class="row align-items-center justify-content-center text-white">
+            <div class="col-12">
+                <h1 class="display-2 mt-3">Ticketmaster</h1>
+            </div>
+            <div class="col-12">
+                <p class="fw-bold fs-1 mb-5">Quickly find tickets around you</p>
+            </div>
+
+
+        </div>
+        <div class="row align-items-center justify-content-center text-white">
+            <div class=" col-7">
+                <form action="{% url 'ticketmaster-index' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+
+                        <input type="text" class="form-control" placeholder="Search by genre,artist or event"
+                               aria-label="classification" id="classification" name="classificationName">
+
+
+                        <!--  <span class="input-group-text"></span>-->
+
+
+                        <input type="text" class="form-control" placeholder="Enter a city e.g. Hartford"
+                               aria-label="city"
+                               id="city" name="city">
+
+                        <button class="btn btn-outline-secondary btn-danger text-white" type="submit"
+                                id="button-addon2">
+                            Submit
+                        </button>
+
+                    </div>
+                </form>
+
+
+            </div>
+
+        </div>
+        {% comment %}
+                Iterate over each message in the messages list in case there is an error
+            {% endcomment %}
+        {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                <h4>{{ message }}</h4>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% comment %}
+                Show the section below if "users" array is passed from views.py via context variable. If so, then iterate over each user
+            {% endcomment %}
+    {% if events %}
+        <div class="container  text-center my-3 justify-content-center ">
+            <div class="row  justify-content-center">
+                <div class="row bg-white align-items-center justify-content-center  shadow p-0 col-lg-9 col-12"
+                     id="results">
+                    {% for event in events %}
+                        {% comment %}      <div class="row  justify-content-center"> {% endcomment %}
+                        <div class=" col-12">
+                            <div class="card h-100 my-3  shadow justify-content-center">
+                                <div class="row g-0  align-items-center justify-content-center text-start">
+                                    <div class="col-lg-4">
+                                        <img class="card-img rounded " src="{{ event.eventImage }}"
+                                             alt="profile-image">
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <div class="card-body">
+                                            <div class="row g-0  align-items-start justify-content-center text-start">
+                                                <div class="col-6 pt-4">
+                                                    <h4 class="card-title">{{ event.eventName }}</h4>
+                                                    <h5 class="card-text text-secondary my-4">{{ event.venueName }}</h5>
+                                                    <p class="card-text text-secondary mb-0 pb-0">{{ event.venueAddress }}</p>
+                                                    <p class="card-text text-secondary mt-0 pt-0">{{ event.venueCity }},
+                                                        {{ event.venueState }}</p>
+                                                    <a href="{{ event.eventUrl }}" target="#">
+                                                        <button type="button" class="btn bg-primary text-white">
+                                                            Find
+                                                            tickets
+                                                        </button>
+                                                    </a>
+
+                                                </div>
+                                                <div class="col-6 text-success text-end fw-bold">
+                                                    <h3 class="card-text  ">{{ event.startDate }}</h3>
+                                                    <p class="card-text fs-5">{{ event.localTime }}</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

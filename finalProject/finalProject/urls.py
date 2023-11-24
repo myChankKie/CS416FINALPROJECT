@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from randomuser import views
+from ticketmaster import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('randomuser/', views.index, name='randomuser-index'),
+    path('ticketmaster/', views.index, name='ticketmaster-index'),
 ]
