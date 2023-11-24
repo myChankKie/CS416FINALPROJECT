@@ -1,0 +1,31 @@
+{% extends 'contact/base.html' %}
+
+{% block title %}
+    Contact Us
+{% endblock %}
+
+{% block body %}
+    <h1>Contact Us</h1>
+
+    {% comment %}
+        In case there are errors in validating user data, for each error generate a div tag and show the error message in it
+        the for loop below iterates a dictionary (error messages) where each item consist of
+        a key (e.g., field such as email) and value pair (e.g., Enter a valid email address)
+    {% endcomment %}
+    {% for key, value in form.errors.items %}
+         <div class="alert alert-danger">
+             {{ key }}: {{ value }}
+         </div>
+    {% endfor %}
+
+
+    <div class="row my-3">
+
+        <form action="{% url 'contact' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_div }}
+            <button type="submit" class="btn btn-primary my-3">Send</button>
+        </form>
+
+    </div>
+{% endblock %}
