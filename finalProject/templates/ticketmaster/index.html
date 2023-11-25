@@ -1,9 +1,33 @@
 {% extends 'ticketmaster/base.html' %}
 {% block body %}
-    <div class="container-fluid bg-primary text-center">
-        <div class="row align-items-center justify-content-center text-white">
-            <div class="col-12">
-                <h1 class="display-2 mt-3">Ticketmaster</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-body fixed-top justify-content-center " data-bs-theme="dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Ticketmaster App</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="nav navbar-nav ms-auto w-100 justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'ticketmaster-index' %}">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Create Account or Login
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'create-account' %}">Create Account</a></li>
+                            <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid bg-primary text-center ">
+        <div class="row align-items-center justify-content-center text-white ">
+            <div class="col-12 ">
+                <h1 class="display-2 mt-5">Ticketmaster</h1>
             </div>
             <div class="col-12">
                 <p class="fw-bold fs-1 mb-5">Quickly find tickets around you</p>
