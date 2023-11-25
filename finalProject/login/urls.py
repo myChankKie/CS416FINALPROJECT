@@ -2,5 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.contact, name='login')
+    path('1/', views.login, name='login'),
+    path('2/', views.create_account, name='create-account')
 ]
