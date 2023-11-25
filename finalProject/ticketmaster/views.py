@@ -1,9 +1,11 @@
+from datetime import datetime
+
 from django.shortcuts import render, redirect
 # Make sure to install requests using 'pip install requests' on your terminal, otherwise 'requests' will not work
 import requests
-from datetime import datetime
 from django.contrib import messages
 from django.http import HttpResponse
+from datetime import datetime
 
 
 def ticketmaster(request):
@@ -65,7 +67,7 @@ def index(request):
                 if event['dates']['start']['noSpecificTime'] is True:
                    localTime = 'none'
                 else:
-                    localTime = event['dates']['start']['localTime']
+                    localTime = datetime_from_utc_to_local(event['dates']['start']['localTime'])
                 #startDate = event['dates']['start']['dateTime']
                 #localTime = event['dates']['start']['localTime']
                 # startDate = 'none'
@@ -143,3 +145,10 @@ def get_events(classification, city):
 
         # Return None to indicate failure
         return None
+
+def datetime_from_utc_to_local(utc_datetime):
+
+    from datetime import datetime as dt
+    date_obj = dt.strptime(utc_datetime, '%H:%M:%S')
+
+    return dt.strftime(date_obj, '%I:%M %p')
