@@ -57,14 +57,19 @@ def index(request):
                 print(eventName)
                 eventImage = event['images'][0]['url']
                 print(eventImage)
-               # if not event['dates']['start']['dateTime']:
-                #    startDate = 'none'
-                #if not event['dates']['start']['localTime']:
-                 #   localTime = 'none'
+                if event['dates'] is None:
+                   startDate = 'none'
+                else:
+                    startDate = event['dates']['start']['localDate']
+
+                if event['dates']['start']['noSpecificTime'] is True:
+                   localTime = 'none'
+                else:
+                    localTime = event['dates']['start']['localTime']
                 #startDate = event['dates']['start']['dateTime']
                 #localTime = event['dates']['start']['localTime']
-                startDate = 'none'
-                localTime = 'none'
+                # startDate = 'none'
+                # localTime = 'none'
                 venueName = event['_embedded']['venues'][0]['name']
                 venueCity = event['_embedded']['venues'][0]['city']['name']
                 venueState = event['_embedded']['venues'][0]['state']['name']
