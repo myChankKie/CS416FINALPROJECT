@@ -106,7 +106,7 @@ def index(request):
                 # Append the user details dictionary to the user_list
                 event_list.append(event_details)
 
-            # Create a context dictionary with the user_list and render the 'index.html' template
+            # Create a context dictionary with the user_list and render the 'thanks.html' template
             context = {'events': event_list}
             return render(request, 'ticketmaster/index.html', context)
 

@@ -16,7 +16,7 @@ def contact(request):
             # print (form.cleaned_data['email']) # for example,email can be accessed using form.cleaned_data['email']
             form.save()
             # redirect to a new URL:
-            return render(request, 'contact/thanks.html')
+            return render(request, 'login/thanks.html')
 
     context = {'form': form}
-    return render(request, 'contact/contact.html', context)
+    return render(request, 'login/form.html', context)

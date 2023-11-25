@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'randomuser.apps.RandomuserConfig',
-    'contact.apps.ContactConfig',
+    'login.apps.ContactConfig',
 ]
 
 MIDDLEWARE = [
