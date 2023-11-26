@@ -10,3 +10,9 @@ class Contact(models.Model):
     def __str__(self):
         # this generates a string with first name space last name by using f-string which is used for string concatenation
         return f"{self.first_name} {self.last_name}"
+
+
+class Login(models.Model):
+    username = models.CharField(max_length=60)
+    password = models.CharField(max_length=60)
+

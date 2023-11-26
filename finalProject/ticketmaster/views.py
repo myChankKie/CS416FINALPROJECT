@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 # Make sure to install requests using 'pip install requests' on your terminal, otherwise 'requests' will not work
 import requests
@@ -11,7 +12,7 @@ from datetime import datetime
 def ticketmaster(request):
     return HttpResponse("Hello, world!")
 
-
+# @login_required(login_url='/login/')
 def index(request):
     # if the request method is a post
     if request.method == 'POST':

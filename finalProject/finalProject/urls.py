@@ -20,6 +20,7 @@ from ticketmaster import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('ticketmaster/', views.index, name='ticketmaster-index'),
+    path('ticketmaster/', include('ticketmaster.urls')),
     path('login/', include('login.urls')),
+
 ]
