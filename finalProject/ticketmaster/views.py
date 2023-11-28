@@ -12,7 +12,7 @@ from datetime import datetime
 def ticketmaster(request):
     return HttpResponse("Hello, world!")
 
-# @login_required(login_url='/login/')
+@login_required(login_url='/login/1/')
 def index(request):
     # if the request method is a post
     if request.method == 'POST':
