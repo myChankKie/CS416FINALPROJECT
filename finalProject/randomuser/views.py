@@ -75,7 +75,7 @@ def index(request):
                 # Append the user details dictionary to the user_list
                 user_list.append(user_details)
 
-            # Create a context dictionary with the user_list and render the 'index.html' template
+            # Create a context dictionary with the user_list and render the 'thanks.html' template
             context = {'users': user_list}
             return render(request, 'randomuser/index.html', context)
 
