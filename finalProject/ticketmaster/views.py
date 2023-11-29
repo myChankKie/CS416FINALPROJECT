@@ -116,6 +116,10 @@ def index(request):
     # all other cases, just render the page without sending/passing any context to the template
     return render(request, 'ticketmaster/index.html')
 
+@login_required(login_url='/login/1/')
+def favorites_view(request):
+    return render(request, 'ticketmaster/favorites.html')
+
 
 def get_events(classification, city):
     try:
