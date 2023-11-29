@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'randomuser.apps.RandomuserConfig',
     'login.apps.ContactConfig',
+    'ticketmaster.apps.TicketmasterConfig',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +129,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_DIRS = ['static']
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

@@ -8,9 +8,12 @@ from django.contrib import messages
 from django.http import HttpResponse
 from datetime import datetime
 
+from ticketmaster.models import Event_Search
+
 
 def ticketmaster(request):
     return HttpResponse("Hello, world!")
+
 
 @login_required(login_url='/login/1/')
 def index(request):
@@ -54,6 +57,8 @@ def index(request):
             # Rather than directly passing the "users" array to the template,
             # the following approach allows server-side processing and formatting of specific data (e.g., date).
             # So, the template only needs to plug in the preprocessed information.
+
+            Event_Search.objects.all().delete()
             for event in events:
                 # Extract relevant information from the event dictionary
                 eventName = event['name']
@@ -61,16 +66,16 @@ def index(request):
                 eventImage = event['images'][0]['url']
                 print(eventImage)
                 if event['dates'] is None:
-                   startDate = 'none'
+                    startDate = 'none'
                 else:
                     startDate = event['dates']['start']['localDate']
 
                 if event['dates']['start']['noSpecificTime'] is True:
-                   localTime = 'none'
+                    localTime = 'none'
                 else:
                     localTime = datetime_from_utc_to_local(event['dates']['start']['localTime'])
-                #startDate = event['dates']['start']['dateTime']
-                #localTime = event['dates']['start']['localTime']
+                # startDate = event['dates']['start']['dateTime']
+                # localTime = event['dates']['start']['localTime']
                 # startDate = 'none'
                 # localTime = 'none'
                 venueName = event['_embedded']['venues'][0]['name']
@@ -106,6 +111,20 @@ def index(request):
                     #  'registration_date': registration_date
                 }
 
+                currentSearch = Event_Search()
+
+                currentSearch.eventName = eventName;
+                currentSearch.eventImage = eventImage;
+                currentSearch.startDate = startDate;
+                currentSearch.localTime = localTime;
+                currentSearch.venueName = venueName;
+                currentSearch.venueCity = venueCity;
+                currentSearch.venueState = venueState;
+                currentSearch.venueAddress = venueAddress;
+                currentSearch.eventUrl = eventUrl;
+
+                currentSearch.save()
+
                 # Append the user details dictionary to the user_list
                 event_list.append(event_details)
 
@@ -115,6 +134,7 @@ def index(request):
 
     # all other cases, just render the page without sending/passing any context to the template
     return render(request, 'ticketmaster/index.html')
+
 
 @login_required(login_url='/login/1/')
 def favorites_view(request):
@@ -151,8 +171,8 @@ def get_events(classification, city):
         # Return None to indicate failure
         return None
 
-def datetime_from_utc_to_local(utc_datetime):
 
+def datetime_from_utc_to_local(utc_datetime):
     from datetime import datetime as dt
     date_obj = dt.strptime(utc_datetime, '%H:%M:%S')
 
