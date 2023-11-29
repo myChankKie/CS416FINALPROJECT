@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from datetime import datetime
 
-from ticketmaster.models import Event_Search
+from ticketmaster.models import Favorites_Library, Event_Search
 
 
 def ticketmaster(request):
@@ -110,35 +110,54 @@ def index(request):
                     'eventUrl': eventUrl
                     #  'registration_date': registration_date
                 }
-
                 currentSearch = Event_Search()
-
-                currentSearch.eventName = eventName;
-                currentSearch.eventImage = eventImage;
-                currentSearch.startDate = startDate;
-                currentSearch.localTime = localTime;
-                currentSearch.venueName = venueName;
-                currentSearch.venueCity = venueCity;
-                currentSearch.venueState = venueState;
-                currentSearch.venueAddress = venueAddress;
-                currentSearch.eventUrl = eventUrl;
-
+                currentSearch.eventName = eventName
+                currentSearch.eventImage = eventImage
+                currentSearch.startDate = startDate
+                currentSearch.localTime = localTime
+                currentSearch.venueName = venueName
+                currentSearch.venueCity = venueCity
+                currentSearch.venueState = venueState
+                currentSearch.venueAddress = venueAddress
+                currentSearch.eventUrl = eventUrl
                 currentSearch.save()
+
 
                 # Append the user details dictionary to the user_list
                 event_list.append(event_details)
-
+            allEventsSearch = Event_Search.objects.all()
             # Create a context dictionary with the user_list and render the 'thanks.html' template
-            context = {'events': event_list}
+            context = {'events': allEventsSearch}
             return render(request, 'ticketmaster/index.html', context)
 
     # all other cases, just render the page without sending/passing any context to the template
     return render(request, 'ticketmaster/index.html')
 
+def add_favorite(request, event_id):
+    clickedEvent = Event_Search.objects.get(id=event_id)
+
+
+    currentFavorite = Favorites_Library()
+    currentFavorite.accountUser = request.user.username
+    currentFavorite.eventName = clickedEvent.eventName
+    currentFavorite.eventImage = clickedEvent.eventImage
+    currentFavorite.startDate = clickedEvent.startDate
+    currentFavorite.localTime = clickedEvent.localTime
+    currentFavorite.venueName = clickedEvent.venueName
+    currentFavorite.venueCity = clickedEvent.venueCity
+    currentFavorite.venueState = clickedEvent.venueState
+    currentFavorite.venueAddress = clickedEvent.venueAddress
+    currentFavorite.eventUrl = clickedEvent.eventUrl
+    currentFavorite.save()
+    return render(request, 'ticketmaster/index.html')
 
 @login_required(login_url='/login/1/')
 def favorites_view(request):
-    return render(request, 'ticketmaster/favorites.html')
+
+
+    userFavoritesLibrary = Favorites_Library.objects.get(accountUser=request.user.username)[0]
+    context = {'events': userFavoritesLibrary}
+    return render(request, 'ticketmaster/favorites.html', context)
 
 
 def get_events(classification, city):
