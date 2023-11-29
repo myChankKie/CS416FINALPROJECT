@@ -122,7 +122,6 @@ def index(request):
                 currentSearch.eventUrl = eventUrl
                 currentSearch.save()
 
-
                 # Append the user details dictionary to the user_list
                 event_list.append(event_details)
             allEventsSearch = Event_Search.objects.all()
@@ -133,9 +132,9 @@ def index(request):
     # all other cases, just render the page without sending/passing any context to the template
     return render(request, 'ticketmaster/index.html')
 
+
 def add_favorite(request, event_id):
     clickedEvent = Event_Search.objects.get(id=event_id)
-
 
     currentFavorite = Favorites_Library()
     currentFavorite.accountUser = request.user.username
@@ -151,12 +150,12 @@ def add_favorite(request, event_id):
     currentFavorite.save()
     return render(request, 'ticketmaster/index.html')
 
+
 @login_required(login_url='/login/1/')
 def favorites_view(request):
-
-
-    userFavoritesLibrary = Favorites_Library.objects.get(accountUser=request.user.username)[0]
+    userFavoritesLibrary = Favorites_Library.objects.filter(accountUser=request.user.username)
     context = {'events': userFavoritesLibrary}
+    print(context)
     return render(request, 'ticketmaster/favorites.html', context)
 
 
