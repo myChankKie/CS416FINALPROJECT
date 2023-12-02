@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from datetime import datetime
 
+from ticketmaster.forms import Favorites_Library_Form
 from ticketmaster.models import Favorites_Library, Event_Search
 
 
@@ -149,6 +150,37 @@ def add_favorite(request, event_id):
     currentFavorite.eventUrl = clickedEvent.eventUrl
     currentFavorite.save()
     return render(request, 'ticketmaster/index.html')
+
+
+def create_favorite(request):
+    # Create a form instance and populate it with data from the request
+    form = Favorites_Library_Form(request.POST or None)
+    # check whether it's valid:
+    if form.is_valid():
+        # save the record into the db
+        form.save()
+        # after saving redirect to view_product page
+        return redirect('ticketmaster-favorites')
+
+    # if the request does not have post data, a blank form will be rendered
+    return render(request, 'ticketmaster/favorite-form.html', {'form': form})
+def update_favorite(request, event_id):
+    favorite = Favorites_Library.objects.get(id=event_id)
+
+    form = Favorites_Library_Form(request.POST or None, instance=favorite)
+    if form.is_valid():
+        form.save()
+        return redirect('ticketmaster-favorites')
+    return render(request, 'ticketmaster/favorite-form.html', {'form': form})
+
+
+def delete_favorite(request, event_id):
+    favorite = Favorites_Library.objects.get(id=event_id)
+
+    if request.method == 'POST':
+        favorite.delete()
+        return redirect('ticketmaster-favorites')
+    return render(request, 'ticketmaster/delete-confirm.html', {'favorite': favorite})
 
 
 @login_required(login_url='/login/1/')
