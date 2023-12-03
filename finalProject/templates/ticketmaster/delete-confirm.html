@@ -1,0 +1,12 @@
+{% extends 'ticketmaster/base.html' %}
+{% load crispy_forms_tags %}
+{% block body %}
+    <form action = "{%  url 'ticketmaster-delete-favorite' favorite.id  %}" method = "post">
+        {% csrf_token %}
+        {{ form|crispy }}
+            <h4> Are you sure that you want to delete {{favorite.eventName}}</h4>
+        <a href="{% url 'ticketmaster-favorites' %}" class="btn btn-info"><i class="fas fa-arrow-left"></i> Go Back</a>
+         <button type="submit" class="btn btn-success">Yes, I am sure!</button>
+
+    </form>
+{% endblock %}
