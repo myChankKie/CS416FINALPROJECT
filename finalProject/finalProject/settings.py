@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'login.apps.ContactConfig',
     'ticketmaster.apps.TicketmasterConfig',
     'crispy_forms',
-    "crispy_bootstrap5"
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
