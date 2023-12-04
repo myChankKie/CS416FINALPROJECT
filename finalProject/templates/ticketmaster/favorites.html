@@ -47,38 +47,7 @@
 
 
         </div>
-        {#        <div class="row align-items-center justify-content-center text-white">#}
-        {#            <div class=" col-7">#}
-        {#                <form action="{% url 'ticketmaster-index' %}" method="post">#}
-        {#                    {% csrf_token %}#}
-        {#                    <div class="input-group mb-3">#}
-        {##}
-        {#                        <input type="text" class="form-control" placeholder="Search by genre,artist or event"#}
-        {#                               aria-label="classification" id="classification" name="classificationName">#}
-        {##}
-        {##}
-        {#                        <!--  <span class="input-group-text"></span>-->#}
-        {##}
-        {##}
-        {#                        <input type="text" class="form-control" placeholder="Enter a city e.g. Hartford"#}
-        {#                               aria-label="city"#}
-        {#                               id="city" name="city">#}
-        {##}
-        {#                        <button class="btn btn-outline-secondary btn-danger text-white" type="submit"#}
-        {#                                id="button-addon2">#}
-        {#                            Submit#}
-        {#                        </button>#}
-        {##}
-        {#                    </div>#}
-        {#                </form>#}
-        {##}
-        {##}
-        {#            </div>#}
-        {##}
-        {#        </div>#}
-        {% comment %}
-                Iterate over each message in the messages list in case there is an error
-            {% endcomment %}
+
         {% for message in messages %}
             <div class="alert alert-danger" role="alert">
                 <h4>{{ message }}</h4>
