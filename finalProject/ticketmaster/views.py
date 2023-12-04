@@ -133,7 +133,7 @@ def index(request):
     # all other cases, just render the page without sending/passing any context to the template
     return render(request, 'ticketmaster/index.html')
 
-
+@login_required(login_url='/login/1/')
 def add_favorite(request, event_id):
     clickedEvent = Event_Search.objects.get(id=event_id)
 
@@ -151,7 +151,7 @@ def add_favorite(request, event_id):
     currentFavorite.save()
     return render(request, 'ticketmaster/index.html')
 
-
+@login_required(login_url='/login/1/')
 def create_favorite(request):
     # Create a form instance and populate it with data from the request
     form = Favorites_Library_Form(request.POST or None)
@@ -167,6 +167,7 @@ def create_favorite(request):
 
     # if the request does not have post data, a blank form will be rendered
     return render(request, 'ticketmaster/favorite-form.html', {'form': form})
+@login_required(login_url='/login/1/')
 def update_favorite(request, event_id):
     favorite = Favorites_Library.objects.get(id=event_id)
 
@@ -176,7 +177,7 @@ def update_favorite(request, event_id):
         return redirect('ticketmaster-favorites')
     return render(request, 'ticketmaster/favorite-form.html', {'form': form})
 
-
+@login_required(login_url='/login/1/')
 def delete_favorite(request, event_id):
     favorite = Favorites_Library.objects.get(id=event_id)
 
