@@ -157,7 +157,10 @@ def create_favorite(request):
     form = Favorites_Library_Form(request.POST or None)
     # check whether it's valid:
     if form.is_valid():
+        obj = form.save(commit=False)
+        obj.accountUser = request.user.username
         # save the record into the db
+        obj.save()
         form.save()
         # after saving redirect to view_product page
         return redirect('ticketmaster-favorites')
