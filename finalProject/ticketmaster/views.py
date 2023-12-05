@@ -43,8 +43,12 @@ def index(request):
             messages.info(request, 'The server encountered an issue while fetching data. Please try again later.')
             # redirect user to the index page
             return redirect('ticketmaster-index')
+        elif random_events['page']['totalElements'] == 0:
+                messages.info(request, 'No Events were Found.')
+                return redirect('ticketmaster-index')
 
         else:
+
             # print the response for testing purpose (open "Run" at the bottom to see what is printed)
             print(random_events)
             # Store each user's information in a variable
